@@ -46,3 +46,7 @@ INSTALL_TASK_CMD="/usr/local/bin/aws ecs register-task-definition --region ${AWS
 echo ${INSTALL_TASK_CMD}
 eval ${INSTALL_TASK_CMD}
 
+INSTALL_SERVICE_CMD="/usr/local/bin/aws ecs create-service --region ${AWS_REGION} --cli-input-json file:///tmp/service-definition.json"
+echo ${INSTALL_SERVICE_CMD}
+eval ${INSTALL_SERVICE_CMD}
+
