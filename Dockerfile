@@ -12,10 +12,23 @@ RUN apt-get --quiet update && \
 
 RUN pip install --upgrade pip python-dateutil awscli
 
+ADD install-definitions.sh /install-definitions.sh
+
 # Set the AWS environment variables
 ENV AWS_ACCESS_KEY_ID OVERRIDE ME 
 ENV AWS_SECRET_ACCESS_KEY OVERRIDE_ME
 ENV AWS_REGION OVERRIDE_ME 
 
-ENTRYPOINT ["/usr/local/bin/aws"]
-CMD ["--version"]
+# Set the Artifactory variables 
+ENV BRANCH=OVERRIDE_ME
+ENV MAJOR=OVERRIDE_ME
+ENV MINOR=OVERRIDE_ME
+ENV PATCH=OVERRIDE_ME
+ENV GROUP=OVERRIDE_ME
+ENV RELEASE_URL=OVERRIDE_ME
+ENV MILESTONE_URL=OVERRIDE_ME
+ENV ARTIFACT_ID=OVERRIDE_ME
+
+WORKDIR /tmp
+
+ENTRYPOINT ["/install-definitions.sh"]

@@ -12,16 +12,16 @@
 # transform branch, major, minor, patch into a version, eg. 1.0.10.RELEASE
 # combine those pieces into a final URL
 
-BRANCH=development
-MAJOR=1
-MINOR=0
-PATCH=6
-GROUP=com.transparent.al
-GROUP_PATH=$(echo ${GROUP} | tr . /)
-RELEASE_URL=http://192.168.254.81:81/artifactory/transparent-release
-MILESTONE_URL=http://192.168.254.81:81/artifactory/transparent-milestone
-ARTIFACT_ID=hid-generator
+#BRANCH=development
+#MAJOR=1
+#MINOR=0
+#PATCH=6
+#GROUP=com.transparent.al
+#RELEASE_URL=http://192.168.254.81:81/artifactory/transparent-release
+#MILESTONE_URL=http://192.168.254.81:81/artifactory/transparent-milestone
+#ARTIFACT_ID=hid-generator
 
+GROUP_PATH=$(echo ${GROUP} | tr . /)
 if [ "${BRANCH}" = "master" ]; then
     VERSION="${MAJOR}.${MINOR}.${PATCH}.RELEASE"
     URL=${RELEASE_URL} 
@@ -30,15 +30,15 @@ else
     URL=${MILESTONE_URL} 
 fi
 
-TASK_CMD="curl --get --silent --show-error --output /tmp/task-definition.json ${URL}/${GROUP_PATH}/${ARTIFACT_ID}/${VERSION}/${ARTIFACT_ID}-${VERSION}-task-definition.json"
+TASK_CMD="curl --get --output /tmp/task-definition.json ${URL}/${GROUP_PATH}/${ARTIFACT_ID}/${VERSION}/${ARTIFACT_ID}-${VERSION}-task-definition.json"
 echo ${TASK_CMD}
 eval ${TASK_CMD}
 
-SERVICE_CMD="curl --get --silent --show-error --output /tmp/service-definition.json ${URL}/${GROUP_PATH}/${ARTIFACT_ID}/${VERSION}/${ARTIFACT_ID}-${VERSION}-service-definition.json"
+SERVICE_CMD="curl --get --output /tmp/service-definition.json ${URL}/${GROUP_PATH}/${ARTIFACT_ID}/${VERSION}/${ARTIFACT_ID}-${VERSION}-service-definition.json"
 echo ${SERVICE_CMD}
 eval ${SERVICE_CMD}
 
-UPDATE_CMD="curl --get --silent --show-error --output /tmp/service-update.json ${URL}/${GROUP_PATH}/${ARTIFACT_ID}/${VERSION}/${ARTIFACT_ID}-${VERSION}-service-update.json"
+UPDATE_CMD="curl --get --output /tmp/service-update.json ${URL}/${GROUP_PATH}/${ARTIFACT_ID}/${VERSION}/${ARTIFACT_ID}-${VERSION}-service-update.json"
 echo ${UPDATE_CMD}
 eval ${UPDATE_CMD}
 
